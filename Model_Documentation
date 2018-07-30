@@ -1,0 +1,40 @@
+Self Driving Car Engineer Nanodegree Term 3
+Path Planning Project
+
+
+Model:
+This model used in the path planning algorithm for this project has been designed with 3 main features:
+Car-to-map Coordinate Conversion Frenet Coordinates
+Sensor Fusion Input Processing
+Path Inference and Trajectory Planning
+
+Car-to-map coordinate conversion to Frenet Coordinates
+An initial hurdle in the project was to ensure the simulator is properly processing the input and output of the
+project c++ algorithm. Project code and project walkthrough resources were instrumental in ensuring that this effort was functional. 
+The simulator accepts points that are used to determine the trajectory of the vehicle. The cartesian coordinate system is converted to 
+Frenet Coordinates, which allow for intuitive vehicle reference comparisons for determining behavioral inputs to the model, such as:
+nearby external vehicles in same lane or other lanes. Initially, logic using points given and received by the simulator calculates 
+the location of the car and default parameters are used to initialize. Ego vehicle reference yaw and location are converted as well.
+There is a queue of 50 points that are used to ensure smooth trajectories and infereces on trajectory to perform higher order actions
+such as turns, lane changes, speed up and down.
+
+Sensor Fusion Input Processing
+There is inbuilt sensor fusion metrics that are given by the simulator that is heavily processed in higher order actions for path planning.
+The approach in this model is to scan for metrics giving the localization and physical parameters of other vehicles in the simulator. 
+These metrics and parameters are used to filter for external vehicles that are in specific ranges that influence the downstream Trajectory
+Planning algorithm. One example is to filter for cars that may be on blind spots and cars that may be in blind spots soon. These nested 
+sets of logic ensures a coordinated effort under a strict rules engine to check for blind spots, make deliberate and safe turns over 
+multiple lanes, and ensure proper speed management to carry out these maneuvers. Speed and location of the vehicle and other external 
+vehicles are heavily used as input to this piece.
+
+Path Inference and Trajectory Planning
+Spline libraries and Project Walkthrough hints were very useful in orchestrating the input from Sensor Fusion and Frenet Coordinate 
+conversions to create a queue of points for the simulator. The sensor fusion output of the simulator provides information regarding speed 
+and lane position of external vehicles. This input is scanned to flag for indicators that keep track of lane line obstructions. Using these
+flags, loops are run to check for possible avenues to avoid the lane obstructions. Behavioral actions such as slowing down, changing lanes,
+and speeding up are governed by these indicators, loops, and other information Sensor Fusion provides. The Trajectory Planning Algorithm
+influences the spline calculated polynomial of points that ensure that acceleration limits, speed limits, and other uncomfortable or unsafe
+trajectories are considered.
+
+This was a very exciting and informative project to work on. I appreciate the Udacity teams for ensuring such a pleasant educational 
+experience.
